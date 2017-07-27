@@ -23,6 +23,7 @@
 "Pekachja","König von Israel",-742,-740,"2. Könige 15"
 "Pekach","König von Israel",-752,-732,"2. Könige 15"
 "Hosea","König von Israel",-732,-723,"2. Könige 17"
+
 "Rehabeam","König von Juda",-931,-913,"1. Könige 12"
 "Abija","König von Juda",-913,-911,"1. Könige 15"
 "Asa","König von Juda",-911,-870,"1. Könige 15"
@@ -43,6 +44,7 @@
 "Jojakim","König von Juda",-609,-598,"2. Könige 23"
 "Jojachin","König von Juda",-598,-597,"2. Könige 24"
 "Zedekia","König von Juda",-597,-586,"2. Könige 24"
+
 "Obadja","Prophet",-850,-840,,"Edom"
 "Joel","Prophet",-835,-796,,"Juda"
 "Jona","Prophet",-784,-760,,"Ninive"
@@ -58,9 +60,10 @@
 "Hesekiel","Prophet",-593,-570,,"Babylon"
 "Haggai","Prophet",-520,-505,,"Juda"
 "Sacharja","Prophet",-520,-470,,"Juda"
-"Esra","Prophet",-538,-458,,"Persien"
+"Esra","Prophet",-558,-446,,"Persien"
 "Nehemia","Prophet",-446,-424,,"Persien"
 "Maleachi","Prophet,-437,-417,,"Juda"
+
 "Abraham","Patriarch",-2222,,"1. Mose 12"
 "Ismael","Patriarch",-2137,,"1. Mose 16"
 "Isaak","Patriarch",-2122,,"1. Mose 21"
@@ -77,6 +80,7 @@
 "Sebulon","Patriarch",-1908,,"1. Mose 30"
 "Joseph","Patriarch",-1907,-1797,"1. Mose 30"
 "Benjamin","Patriarch",-1897,,"1. Mose 35"
+
 "Otniel","Richter",-1390,-1350,"Richter 3"
 "Ehud","Richter",-1332,-1252,"Richter 3"
 "Samgar","Richter",-1250,-1247,"Richter3"
@@ -93,7 +97,9 @@
 "Simson","Richter",-1092,-1072,"Richter 13"
 "Eli","Richter",-1114,-1105,"1. Samuel 1"
 "Samuel","Richter",-1105,-1050
+
 "Samuel","Priester",-1050,-1030 
+
 "Adam","Jesuslinie",-4230
 "Seth","Jesuslinie",-4100
 "Enos","Jesuslinie",-3995
