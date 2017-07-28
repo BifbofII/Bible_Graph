@@ -60,7 +60,7 @@
 "Hesekiel","Prophet",-593,-570,,"Babylon"
 "Haggai","Prophet",-520,-505,,"Juda"
 "Sacharja","Prophet",-520,-470,,"Juda"
-"Esra","Prophet",-558,-446,,"Persien"
+"Esra","Prophet",-458,-446,,"Persien"
 "Nehemia","Prophet",-446,-424,,"Persien"
 "Maleachi","Prophet,-437,-417,,"Juda"
 
@@ -128,10 +128,10 @@
 "Aram","Jesuslinie"
 "Amminadab","Jesuslinie"
 "Nachschon","Jesuslinie"
-"Salmon","Jesuslinie"
-"Boas","Jesuslinie"
-"Obed","Jesuslinie"
-"Isai","Jesuslinie"
+"Salmon","Jesuslinie",-1425
+"Boas","Jesuslinie",-1160,,"Ruth 2"
+"Obed","Jesuslinie"-1110,,"Ruth 4"
+"Isai","Jesuslinie"-1050,,"Ruth 4"
 "David","Jesuslinie",-998,-965,"2. Samuel 5"
 "Salomo","Jesuslinie",-965,-931,"1. Könige 1"
 "Rehabeam","Jesuslinie",-931,-913,"1. Könige 12"
@@ -160,3 +160,5 @@
 "Jakob","Jesuslinie"
 "Joseph","Jesuslinie"
 "Jesus",,0,33
+
+"Ruth","",-1150
