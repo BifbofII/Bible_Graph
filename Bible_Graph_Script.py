@@ -11,13 +11,94 @@ import cairo
 import configparser
 import configparser
 import argparse
+import matplotlib.colors as colors
 
-# Static variable declarations
-data_path = "data/"
-data_files = {"books":"books.csv", "events":"events.csv", "persons":"persons.csv"}
-data = {}
+class Graph(object):
+    def setup(self, width, height, start_year, end_year, border):
+        """Setup the graph with basic preset values."""
+        self.ctx = cairo.Context(self.surface)
+        self.ctx.scale(width, width)
+        self.user_space_dim = self.ctx.device_to_user(width, height)
+        self.ctx.rectangle(border, border, 1 - border, self.user_space_dim[1] - border)
+        self.ctx.clip()
+        self.start_year = start_year
+        self.end_year = end_year
+        self.border = border
+
+    def year_to_user(self, year):
+        """Return coordinate in userspace for year."""
+        return self.border + (1.0 - 2 * self.border) / (self.end_year -
+                self.start_year) * (year - self.start_year)
+
+    def draw_background(self, bg_color, bg_alpha):
+        """Draw backgound on canvas"""
+        self.ctx.save()
+        self.ctx.set_source_rgba(*colors.hex2color(bg_color), bg_alpha)
+        self.ctx.paint()
+        self.ctx.restore()
+
+    def draw_timeline(self, timeline_color, line_width, resolution, font, font_size):
+        """Draw the timeline of the graph on the canvas."""
+        dist_top = self.border + font_size + 8 * line_width
+        self.ctx.save()
+        self.ctx.set_source_rgb(*colors.hex2color(timeline_color))
+        self.ctx.set_line_width(line_width)
+        self.ctx.select_font_face(font)
+        self.ctx.set_font_size(font_size)
+        self.ctx.move_to(self.border, dist_top)
+        self.ctx.line_to(1.0 - self.border, dist_top)
+        self.ctx.move_to(self.year_to_user(self.start_year) + 0.5 * line_width,
+                dist_top - 7 * line_width)
+        self.ctx.line_to(self.year_to_user(self.start_year) + 0.5 * line_width,
+                dist_top + 7 * line_width)
+        self.ctx.save()
+        self.ctx.move_to(self.border + line_width,
+                self.border + self.ctx.text_extents(str(self.start_year))[3])
+        self.ctx.show_text(str(self.start_year))
+        self.ctx.restore()
+        for year in range(int(self.start_year / resolution) * resolution,
+                self.end_year, resolution):
+            if year % (5 * resolution) == 0:
+                line_length = 5
+                
+                self.ctx.save()
+                self.ctx.move_to(self.year_to_user(year) - 0.5
+                        * self.ctx.text_extents(str(year))[2],
+                        self.border + self.ctx.text_extents(str(year))[3])
+                self.ctx.show_text(str(year))
+                self.ctx.restore()
+            else:
+                line_length = 2.5
+            self.ctx.move_to(self.year_to_user(year),
+                    dist_top - line_length * line_width)
+            self.ctx.line_to(self.year_to_user(year),
+                    dist_top + line_length * line_width)
+        self.ctx.move_to(self.year_to_user(self.end_year) - 0.5 * line_width,
+                dist_top - 7 * line_width)
+        self.ctx.line_to(self.year_to_user(self.end_year) - 0.5 * line_width,
+                dist_top + 7 * line_width)
+        self.ctx.save()
+        self.ctx.move_to(1 - self.border - line_width - self.ctx.text_extents(str(self.end_year))[2],
+                self.border + self.ctx.text_extents(str(self.end_year))[3])
+        self.ctx.show_text(str(self.end_year))
+        self.ctx.restore()
+        self.ctx.stroke()
+        self.ctx.restore()
+
+    def finish(self):
+        """Finish surface"""
+        self.surface.finish()
+
+class SVGFile(Graph):
+    """Class for a output as .svg file"""
+    def __init__(self, filename, width, height, start_year, end_year, border):
+        """Initialise surface and output"""
+        self.surface = cairo.SVGSurface(filename + '.svg', width, height)
+        self.setup(width, height, start_year, end_year, border)
+
 
 def read_data(data_file_path):
+    """Return data given by data_file_path.csv as list object"""
     with open(data_file_path, newline='') as data_file:
         csv_reader = csv.DictReader(data_file, quotechar='"',
                 quoting=csv.QUOTE_NONNUMERIC)
@@ -27,6 +108,7 @@ def read_data(data_file_path):
     return data_list 
 
 def read_config(config_file_path):
+    """Return presets given by config_file_path or cli."""
     raw_config = configparser.ConfigParser()
     raw_config.read(config_file_path)
     config = {}
@@ -57,10 +139,9 @@ def read_config(config_file_path):
 
     cli_parser = argparse.ArgumentParser(description=
             'A script to create a graph of the events and persons of the bible.')
-    cli_parser.add_argument('--x-resolution', help='Vertical resolution of the output image',
+    cli_parser.add_argument('--x-resolution',
+            help='Vertical resolution of the output image',
             default=config['Output File']['x_resolution'], type=int)
-    cli_parser.add_argument('--y-resolution', help='Horizontal resolution of the output image',
-            default=config['Output File']['y_resolution'], type=int)
     cli_parser.add_argument('--output-type', help='Set the output file type',
             default=config['Output File']['file_type'])
     cli_parser.add_argument('--output-name', help='Set the name of the output file',
@@ -87,9 +168,23 @@ def read_config(config_file_path):
     return presets
 
 def main():
+    """Main function"""
+    data = {}
     presets = read_config('config.cfg')
     for data_file_name in presets['File Paths']['data_files']:
-        data[data_file_name[0:-4]] = read_data(presets['File Paths']['data_path']+data_file_name)
-    print(data)
+        data[data_file_name[0:-4]] = read_data(presets['File Paths']['data_path']
+                + data_file_name)
 
-main()
+    output = SVGFile(presets['Output File']['file_name'],
+            presets['Output File']['x_resolution'],
+            presets['Output File']['y_resolution'], presets['Output']['start_year'],
+            presets['Output']['end_year'], presets['Output']['border'])
+    output.draw_background(presets['Colors']['background'],
+            presets['Colors']['background_alpha'])
+    output.draw_timeline(presets['Timeline']['color'],
+            presets['Timeline']['line_width'], presets['Timeline']['resolution'],
+            presets['Timeline']['font'], presets['Timeline']['font_size'])
+    output.finish()
+
+if __name__ == '__main__':
+    main()
