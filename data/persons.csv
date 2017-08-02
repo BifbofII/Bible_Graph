@@ -8,7 +8,7 @@
 "Baesa","König von Israel",-909,-886,"1. Könige 15"
 "Ela","König von Israel",-886,-885,"1. Könige 16"
 "Simri","König von Israel",-885,-885,"1. Könige 16"
-"Tibni","König von Israel",-885,-880,1. Könige 16"
+"Tibni","König von Israel",-885,-880,"1. Könige 16"
 "Omri","König von Israel",-885,-874,"1. Könige 16"
 "Ahab","König von Israel",-874,-853,"1. Könige 16"
 "Ahasja","König von Israel",-853,-852,"1. Könige 22"
@@ -139,14 +139,14 @@
 "Asa","Jesuslinie",-911,-870,"1. Könige 15"
 "Josaphat","Jesuslinie",-872,-848,"1. Könige 22"
 "Joram","Jesuslinie",-853,-841,"2. Könige 8"
-"Usija (Asarja)","Jesuslinie",-792,-740,"2. Könige 15
+"Usija (Asarja)","Jesuslinie",-792,-740,"2. Könige 15"
 "Jotam","Jesuslinie",-750,-732,"2. Könige 15"
 "Ahas","Jesuslinie",-735,-716,"2. Könige 16"
 "Hiskia","Jesuslinie",-716,-687,"2. Könige 18"
 "Manasse","Jesuslinie",-697,-643,"2. Könige 21"
 "Amon","Jesuslinie",-643,-641,"2. Könige 21"
 "Josia","Jesuslinie",-641,-609,"2. Könige 22"
-"Jechonja","Jesuslinie" //bei Wegführung Babylon
+"Jechonja","Jesuslinie"
 "Schealtiel","Jesuslinie"
 "Serubbabel","Jesuslinie"
 "Abihud","Jesuslinie"
@@ -161,4 +161,4 @@
 "Joseph","Jesuslinie"
 "Jesus",,0,33
 
-"Ruth","",-1150
+"Ruth",,-1150
