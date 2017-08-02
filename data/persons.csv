@@ -1,2 +1,164 @@
-"Name","Catergory","Start Year","End Year"
-"David","King",-1000,-950
+"Name","Catergory","Start Year","End Year","Reference","Location"
+"Saul","König von Israel",-1050,-1010,"1. Samuel 10"
+"Ischboseth","König von Israel",-1000,-998,"2. Samuel 2"
+"David","König von Israel",-998,-965,"2. Samuel 5"
+"Salomo","König von Israel",-965,-931,"1. Könige 1"
+"Jerobeam I","König von Israel",-931,-910,"1. Könige 12"
+"Nadab","König von Israel",-910,-909,"1. Könige 15"
+"Baesa","König von Israel",-909,-886,"1. Könige 15"
+"Ela","König von Israel",-886,-885,"1. Könige 16"
+"Simri","König von Israel",-885,-885,"1. Könige 16"
+"Tibni","König von Israel",-885,-880,1. Könige 16"
+"Omri","König von Israel",-885,-874,"1. Könige 16"
+"Ahab","König von Israel",-874,-853,"1. Könige 16"
+"Ahasja","König von Israel",-853,-852,"1. Könige 22"
+"Joram","König von Israel",-852,-841,"2. Könige 2"
+"Jehu","König von Israel",-841,-814,"2. Könige 9"
+"Joahas","König von Israel",-814,-798,"2. Könige 13"
+"Joas","König von Israel",-798,-782,"2. Könige 13"
+"Jerobeam II","König von Israel",-793,-753,"2. Könige 14"
+"Sacharja","König von Israel",-753,-752,"2. Könige 15"
+"Schallum","König von Israel",-752,-752,"2. Könige 15"
+"Menachem","König von Israel",-752,-742,"2. Könige 15"
+"Pekachja","König von Israel",-742,-740,"2. Könige 15"
+"Pekach","König von Israel",-752,-732,"2. Könige 15"
+"Hosea","König von Israel",-732,-723,"2. Könige 17"
+
+"Rehabeam","König von Juda",-931,-913,"1. Könige 12"
+"Abija","König von Juda",-913,-911,"1. Könige 15"
+"Asa","König von Juda",-911,-870,"1. Könige 15"
+"Josaphat","König von Juda",-872,-848,"1. Könige 22"
+"Joram","König von Juda",-853,-841,"2. Könige 8"
+"Ahasja","König von Juda",-841,-841,"2. Könige 8"
+"Athalja","König von Juda",-841,-835,"2. Könige 11"
+"Joas","König von Juda",-835,-796,"2. Könige 11"
+"Amazja","König von Juda",-796,-767,"2. Könige 14"
+"Usija (Asarja)","König von Juda",-792,-740,"2. Könige 15
+"Jotam","König von Juda",-750,-732,"2. Könige 15"
+"Ahas","König von Juda",-735,-716,"2. Könige 16"
+"Hiskia","König von Juda",-716,-687,"2. Könige 18"
+"Manasse","König von Juda",-697,-643,"2. Könige 21"
+"Amon","König von Juda",-643,-641,"2. Könige 21"
+"Josia","König von Juda",-641,-609,"2. Könige 22"
+"Joahas","König von Juda",-609,-609,"2. Könige 23"
+"Jojakim","König von Juda",-609,-598,"2. Könige 23"
+"Jojachin","König von Juda",-598,-597,"2. Könige 24"
+"Zedekia","König von Juda",-597,-586,"2. Könige 24"
+
+"Obadja","Prophet",-850,-840,,"Edom"
+"Joel","Prophet",-835,-796,,"Juda"
+"Jona","Prophet",-784,-760,,"Ninive"
+"Amos","Prophet",-763,-755,,"Israel"
+"Hosea","Prophet",-755,-710,,"Israel"
+"Jesaja","Prophet",-739,-680,,"Juda"
+"Micha","Prophet",-735,-710,,"Juda"
+"Nahum","Prophet",-650,-630,,"Ninive"
+"Zephania","Prophet",-635,-625,,"Juda"
+"Jeremia","Prophet",-627,-570,,"Juda"
+"Habakuk","Prophet",-620,-605,,"Juda"
+"Daniel","Prophet",-605,-536,,"Babylon"
+"Hesekiel","Prophet",-593,-570,,"Babylon"
+"Haggai","Prophet",-520,-505,,"Juda"
+"Sacharja","Prophet",-520,-470,,"Juda"
+"Esra","Prophet",-458,-446,,"Persien"
+"Nehemia","Prophet",-446,-424,,"Persien"
+"Maleachi","Prophet,-437,-417,,"Juda"
+
+"Abraham","Patriarch",-2222,,"1. Mose 12"
+"Ismael","Patriarch",-2137,,"1. Mose 16"
+"Isaak","Patriarch",-2122,,"1. Mose 21"
+"Jakob","Patriarch",-2062,,"1. Mose 25"
+"Ruben","Patriarch",-1917,,"1. Mose 29"
+"Simeon","Patriarch",-1916,,"1. Mose 29"
+"Levi","Patriarch",-1915,,"1. Mose 29"
+"Juda","Patriarch",-1914,,"1. Mose 29"
+"Dan","Patriarch",-1913,,"1. Mose 30"
+"Naphtali","Patriarch",-1912,,"1. Mose 30"
+"Gad","Patriarch",-1911,,"1. Mose 30"
+"Asser","Patriarch",-1910,,"1. Mose 30"
+"Issaschar","Patriarch",-1909,,"1. Mose 30"
+"Sebulon","Patriarch",-1908,,"1. Mose 30"
+"Joseph","Patriarch",-1907,-1797,"1. Mose 30"
+"Benjamin","Patriarch",-1897,,"1. Mose 35"
+
+"Otniel","Richter",-1390,-1350,"Richter 3"
+"Ehud","Richter",-1332,-1252,"Richter 3"
+"Samgar","Richter",-1250,-1247,"Richter3"
+"Barak","Richter",-1227,-1187,"Richter 4"
+"Debora","Richter",-1227,-1187,"Richter 4"
+"Gideon","Richter",-1180,-1140,"Richter 6"
+"Abimelech","Richter",-1140,-1137,"Richter 8"
+"Tola","Richter",-1137,-1114,"Richter 10"
+"Jair","Richter",-1114,-1092,"Richter 10"
+"Jephtah","Richter",-1074,-1068,"Richter 10"
+"Ibzan","Richter",-1068,-1061,"Richter 12"
+"Elon","Richter",-1061,-1051,"Richter 12"
+"Abdon","Richter",-1051,-1043,"Richter 12"
+"Simson","Richter",-1092,-1072,"Richter 13"
+"Eli","Richter",-1114,-1105,"1. Samuel 1"
+"Samuel","Richter",-1105,-1050
+
+"Samuel","Priester",-1050,-1030 
+
+"Adam","Jesuslinie",-4230
+"Seth","Jesuslinie",-4100
+"Enos","Jesuslinie",-3995
+"Kenan","Jesuslinie",-3905
+"Mahalalel","Jesuslinie",-3835
+"Jared","Jesuslinie",-3770
+"Henoch","Jesuslinie",-3608
+"Methusalah","Jesuslinie",-3543
+"Lamech","Jesuslinie",-3356
+"Noah","Jesuslinie",-3174
+"Sem","Jesuslinie",-2674
+"Arpaksad","Jesuslinie",-2572
+"Schelach","Jesuslinie",-2537
+"Heber","Jesuslinie",-2507
+"Peleg","Jesuslinie",-2473
+"Regu","Jesuslinie",-2443
+"Serug","Jesuslinie",-2411
+"Nahor","Jesuslinie",-2381
+"Tarah","Jesuslinie",-2352
+"Abraham","Jesuslinie",-2222
+"Isaak","Jesuslinie",-2122
+"Jakob","Jesuslinie",-2062
+"Juda","Jesuslinie"
+"Perez","Jesuslinie"
+"Hezron","Jesuslinie"
+"Aram","Jesuslinie"
+"Amminadab","Jesuslinie"
+"Nachschon","Jesuslinie"
+"Salmon","Jesuslinie",-1425
+"Boas","Jesuslinie",-1160,,"Ruth 2"
+"Obed","Jesuslinie"-1110,,"Ruth 4"
+"Isai","Jesuslinie"-1050,,"Ruth 4"
+"David","Jesuslinie",-998,-965,"2. Samuel 5"
+"Salomo","Jesuslinie",-965,-931,"1. Könige 1"
+"Rehabeam","Jesuslinie",-931,-913,"1. Könige 12"
+"Abija","Jesuslinie",-913,-911,"1. Könige 15"
+"Asa","Jesuslinie",-911,-870,"1. Könige 15"
+"Josaphat","Jesuslinie",-872,-848,"1. Könige 22"
+"Joram","Jesuslinie",-853,-841,"2. Könige 8"
+"Usija (Asarja)","Jesuslinie",-792,-740,"2. Könige 15
+"Jotam","Jesuslinie",-750,-732,"2. Könige 15"
+"Ahas","Jesuslinie",-735,-716,"2. Könige 16"
+"Hiskia","Jesuslinie",-716,-687,"2. Könige 18"
+"Manasse","Jesuslinie",-697,-643,"2. Könige 21"
+"Amon","Jesuslinie",-643,-641,"2. Könige 21"
+"Josia","Jesuslinie",-641,-609,"2. Könige 22"
+"Jechonja","Jesuslinie" //bei Wegführung Babylon
+"Schealtiel","Jesuslinie"
+"Serubbabel","Jesuslinie"
+"Abihud","Jesuslinie"
+"Eljakim","Jesuslinie"
+"Asor","Jesuslinie"
+"Zadok","Jesuslinie"
+"Achim","Jesuslinie"
+"Eliud","Jesuslinie"
+"Eleasar","Jesuslinie"
+"Mattan","Jesuslinie"
+"Jakob","Jesuslinie"
+"Joseph","Jesuslinie"
+"Jesus",,0,33
+
+"Ruth","",-1150
