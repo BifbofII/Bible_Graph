@@ -12,6 +12,7 @@ import configparser
 import configparser
 import argparse
 import matplotlib.colors as colors
+from math import pi as pi
 
 class Graph(object):
     def setup(self, width, height, start_year, end_year, border):
@@ -45,44 +46,62 @@ class Graph(object):
         self.ctx.set_line_width(line_width)
         self.ctx.select_font_face(font)
         self.ctx.set_font_size(font_size)
+        # Start Year
         self.ctx.move_to(self.border, dist_top)
         self.ctx.line_to(1.0 - self.border, dist_top)
         self.ctx.move_to(self.year_to_user(self.start_year) + 0.5 * line_width,
                 dist_top - 7 * line_width)
         self.ctx.line_to(self.year_to_user(self.start_year) + 0.5 * line_width,
                 dist_top + 7 * line_width)
-        self.ctx.save()
-        self.ctx.move_to(self.border + line_width,
-                self.border + self.ctx.text_extents(str(self.start_year))[3])
-        self.ctx.show_text(str(self.start_year))
-        self.ctx.restore()
+        # Year markings
         for year in range(int(self.start_year / resolution) * resolution,
                 self.end_year, resolution):
             if year % (5 * resolution) == 0:
                 line_length = 5
-                
                 self.ctx.save()
-                self.ctx.move_to(self.year_to_user(year) - 0.5
-                        * self.ctx.text_extents(str(year))[2],
-                        self.border + self.ctx.text_extents(str(year))[3])
+                text_width = self.ctx.text_extents(str(year))[2]
+                # Calculate x position
+                x_pos = self.year_to_user(year) - 0.5 * text_width 
+                # Move inwards if text extents to far
+                if x_pos < self.border:
+                    x_pos = x_pos + (self.border - x_pos)
+                elif x_pos + text_width > (1 - self.border):
+                    x_pos = x_pos + ((1 - self.border) - x_pos)
+                self.ctx.move_to(x_pos, self.border + self.ctx.text_extents(str(year))[3])
                 self.ctx.show_text(str(year))
                 self.ctx.restore()
-            else:
+            else: # Unround years
                 line_length = 2.5
             self.ctx.move_to(self.year_to_user(year),
                     dist_top - line_length * line_width)
             self.ctx.line_to(self.year_to_user(year),
                     dist_top + line_length * line_width)
+        # End year
         self.ctx.move_to(self.year_to_user(self.end_year) - 0.5 * line_width,
                 dist_top - 7 * line_width)
         self.ctx.line_to(self.year_to_user(self.end_year) - 0.5 * line_width,
                 dist_top + 7 * line_width)
-        self.ctx.save()
-        self.ctx.move_to(1 - self.border - line_width - self.ctx.text_extents(str(self.end_year))[2],
-                self.border + self.ctx.text_extents(str(self.end_year))[3])
-        self.ctx.show_text(str(self.end_year))
-        self.ctx.restore()
         self.ctx.stroke()
+        self.ctx.restore()
+
+    def draw_events(self, event_data, y_pos, dot_radius, event_color, font, font_size):
+        """Draw the events to the canvas."""
+        self.ctx.save()
+        self.ctx.set_source_rgb(*colors.hex2color(event_color))
+        self.ctx.set_line_width(dot_radius * 0.5)
+        self.ctx.select_font_face(font)
+        self.ctx.set_font_size(font_size)
+        for event in event_data:
+            try:
+                # Draw dot for event
+                self.ctx.arc(self.year_to_user(event['Year']), y_pos, dot_radius, 0, 2 * pi)
+                self.ctx.stroke()
+                # Add text
+                self.ctx.move_to(self.year_to_user(event['Year']), y_pos - font_size)
+                self.ctx.show_text(event['Name'])
+                self.ctx.new_path()
+            except TypeError:
+                pass
         self.ctx.restore()
 
     def finish(self):
@@ -184,6 +203,9 @@ def main():
     output.draw_timeline(presets['Timeline']['color'],
             presets['Timeline']['line_width'], presets['Timeline']['resolution'],
             presets['Timeline']['font'], presets['Timeline']['font_size'])
+    output.draw_events(data['events'], presets['Events']['y_pos'],
+            presets['Events']['dot_size'], presets['Events']['color'],
+            presets['Events']['font'], presets['Events']['font_size'])
     output.finish()
 
 if __name__ == '__main__':
