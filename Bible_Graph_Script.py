@@ -12,10 +12,11 @@ import configparser
 import configparser
 import argparse
 import matplotlib.colors as colors
+import itertools
 from math import pi as pi
 
 class Graph(object):
-    def setup(self, width, height, start_year, end_year, border):
+    def setup(self, width, height, start_year, end_year, border, space):
         """Setup the graph with basic preset values."""
         self.ctx = cairo.Context(self.surface)
         self.ctx.scale(width, width)
@@ -25,11 +26,46 @@ class Graph(object):
         self.start_year = start_year
         self.end_year = end_year
         self.border = border
+        self.space = space
+        # Variable for storing rectangles of space that is already used
+        self.used_space = []
 
-    def year_to_user(self, year):
+    def __year_to_user__(self, year):
         """Return coordinate in userspace for year."""
         return self.border + (1.0 - 2 * self.border) / (self.end_year -
                 self.start_year) * (year - self.start_year)
+
+    def __find_free_space__(self, new_rectangle):
+        """Returns next free rectangle lower on canvas  with same x-coordinates."""
+        restart = True
+        while restart:
+            restart = False
+            for rectangle in self.used_space:
+                move = False
+                if (new_rectangle[0][0] >= rectangle[0][0] and new_rectangle[0][0] <=
+                        rectangle[1][0] or new_rectangle[1][0] >= rectangle [0][0] and
+                        new_rectangle[1][0] <= rectangle[1][0]):
+                    if (new_rectangle[0][1] >= rectangle[0][1] and new_rectangle[0][1] <=
+                            rectangle[1][1] or new_rectangle[1][1] >= rectangle[0][1] and
+                            new_rectangle[1][1] <= rectangle[1][1]):
+                        move = True
+                elif (rectangle[0][0] >= new_rectangle[0][0] and rectangle[0][0] <=
+                        new_rectangle[1][0] or rectangle[1][0] >= new_rectangle[0][0] and
+                        rectangle[1][0] <= new_rectangle[1][0]):
+                    if (rectangle[0][1] >= new_rectangle[0][1] and rectangle[0][1] <=
+                            new_rectangle[1][1] or rectangle[1][1] >= new_rectangle[0][1] and
+                            rectangle[1][1] <= new_rectangle[1][1]):
+                        move = True
+                if move:
+                    y_distance = rectangle[1][1] - new_rectangle[0][1] + self.space
+                    if new_rectangle[1][1] + y_distance < self.user_space_dim[1] - self.border:
+                        new_rectangle = ((new_rectangle[0][0], new_rectangle[0][1] +
+                            y_distance), (new_rectangle[1][0], new_rectangle [1][1] + y_distance))
+                        restart = True
+                        break
+                    else:
+                        return new_rectangle
+        return new_rectangle
 
     def draw_background(self, bg_color, bg_alpha):
         """Draw backgound on canvas"""
@@ -49,9 +85,9 @@ class Graph(object):
         # Start Year
         self.ctx.move_to(self.border, dist_top)
         self.ctx.line_to(1.0 - self.border, dist_top)
-        self.ctx.move_to(self.year_to_user(self.start_year) + 0.5 * line_width,
+        self.ctx.move_to(self.__year_to_user__(self.start_year) + 0.5 * line_width,
                 dist_top - 7 * line_width)
-        self.ctx.line_to(self.year_to_user(self.start_year) + 0.5 * line_width,
+        self.ctx.line_to(self.__year_to_user__(self.start_year) + 0.5 * line_width,
                 dist_top + 7 * line_width)
         # Year markings
         for year in range(int(self.start_year / resolution) * resolution,
@@ -61,7 +97,7 @@ class Graph(object):
                 self.ctx.save()
                 text_width = self.ctx.text_extents(str(year))[2]
                 # Calculate x position
-                x_pos = self.year_to_user(year) - 0.5 * text_width 
+                x_pos = self.__year_to_user__(year) - 0.5 * text_width 
                 # Move inwards if text extents to far
                 if x_pos < self.border:
                     x_pos = x_pos + (self.border - x_pos)
@@ -72,16 +108,18 @@ class Graph(object):
                 self.ctx.restore()
             else: # Unround years
                 line_length = 2.5
-            self.ctx.move_to(self.year_to_user(year),
+            self.ctx.move_to(self.__year_to_user__(year),
                     dist_top - line_length * line_width)
-            self.ctx.line_to(self.year_to_user(year),
+            self.ctx.line_to(self.__year_to_user__(year),
                     dist_top + line_length * line_width)
         # End year
-        self.ctx.move_to(self.year_to_user(self.end_year) - 0.5 * line_width,
+        self.ctx.move_to(self.__year_to_user__(self.end_year) - 0.5 * line_width,
                 dist_top - 7 * line_width)
-        self.ctx.line_to(self.year_to_user(self.end_year) - 0.5 * line_width,
+        self.ctx.line_to(self.__year_to_user__(self.end_year) - 0.5 * line_width,
                 dist_top + 7 * line_width)
         self.ctx.stroke()
+        self.used_space.append(((self.border, 0), (1 - self.border, dist_top
+            + 7 * line_width)))
         self.ctx.restore()
 
     def draw_events(self, event_data, y_pos, dot_radius, event_color, font, font_size):
@@ -92,16 +130,36 @@ class Graph(object):
         self.ctx.select_font_face(font)
         self.ctx.set_font_size(font_size)
         for event in event_data:
+            year_given = True
             try:
-                # Draw dot for event
-                self.ctx.arc(self.year_to_user(event['Year']), y_pos, dot_radius, 0, 2 * pi)
+                # Calculate x_center
+                x_center = self.__year_to_user__(event['Year'])
+            except TypeError:
+                # No year given
+                year_given = False
+            if year_given:
+                # Get text_extent
+                text_extent = self.ctx.text_extents(event['Name'])
+                # Calculate text_x_pos
+                text_x_pos = x_center - 0.5 * text_extent[2]
+                if text_x_pos < self.border:
+                    text_x_pos = text_x_pos + (self.border - text_x_pos)
+                elif text_x_pos + text_extent[2] > (1 - self.border):
+                    text_x_pos = text_x_pos + ((1 - self.border) - text_x_pos)
+                # Calculate event_extent
+                space = ((text_x_pos, y_pos - 0.5 * font_size - text_extent[3]),
+                        (text_x_pos + text_extent[2], y_pos + 2 * dot_radius))
+                # If event overlaps move it down
+                space = self.__find_free_space__(space)
+                # Add event_extent to used_space
+                self.used_space.append(space)
+                # Draw dot
+                self.ctx.arc(x_center, space[1][1] - 2 * dot_radius, dot_radius, 0, 2 * pi)
                 self.ctx.stroke()
                 # Add text
-                self.ctx.move_to(self.year_to_user(event['Year']), y_pos - font_size)
+                self.ctx.move_to(text_x_pos, space[0][1] + text_extent[3])
                 self.ctx.show_text(event['Name'])
                 self.ctx.new_path()
-            except TypeError:
-                pass
         self.ctx.restore()
 
     def finish(self):
@@ -110,10 +168,10 @@ class Graph(object):
 
 class SVGFile(Graph):
     """Class for a output as .svg file"""
-    def __init__(self, filename, width, height, start_year, end_year, border):
+    def __init__(self, filename, width, height, start_year, end_year, border, space):
         """Initialise surface and output"""
         self.surface = cairo.SVGSurface(filename + '.svg', width, height)
-        self.setup(width, height, start_year, end_year, border)
+        self.setup(width, height, start_year, end_year, border, space)
 
 
 def read_data(data_file_path):
@@ -197,7 +255,8 @@ def main():
     output = SVGFile(presets['Output File']['file_name'],
             presets['Output File']['x_resolution'],
             presets['Output File']['y_resolution'], presets['Output']['start_year'],
-            presets['Output']['end_year'], presets['Output']['border'])
+            presets['Output']['end_year'], presets['Output']['border'],
+            presets['Output']['space'])
     output.draw_background(presets['Colors']['background'],
             presets['Colors']['background_alpha'])
     output.draw_timeline(presets['Timeline']['color'],
