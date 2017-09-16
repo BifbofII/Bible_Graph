@@ -35,3 +35,9 @@ Object files
 
 # Swap files
 .swp
+
+# Rope folder
+/.ropeproject/
+
+# Fuse hidden file
+.fuse_hidden*
